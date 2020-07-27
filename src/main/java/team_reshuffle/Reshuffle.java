@@ -8,41 +8,33 @@ import java.util.Scanner;
 
 public class Reshuffle {
 
-    private final List<Team> oldTeams = new ArrayList<>();
-    private final List<Team> newTeams = new ArrayList<>();
+    private List<Team> oldTeams = new ArrayList<>();
+    private List<Team> newTeams = new ArrayList<>();
 
-    public void generateNewTeams(int maxNumberOfStudentsInTeam) {
-        int oldTeamsCount = oldTeams.size();
-        int allStudentsCount = oldTeams.stream()
-                .reduce(0, (partialResult, team) -> partialResult + team.getMembers().size(), Integer::sum);
-        if (maxNumberOfStudentsInTeam > oldTeamsCount) {
-            throw new IllegalArgumentException("The number of");
-        }
-        int numberOfStudentsLeft = allStudentsCount;
+    public void generateNewTeams() {
+        final int STUDENTS_NUMBER_IN_TEAM = 4;
+        final int TEAMS_COUNT = oldTeams.size();
+
+        int numberOfStudentsLeft = STUDENTS_NUMBER_IN_TEAM * TEAMS_COUNT;
+        int teamIndex = 0;
 
         while (numberOfStudentsLeft > 0) {
             Team newTeam = new Team();
-            int studentsNumberInTeam = Math.min(maxNumberOfStudentsInTeam, numberOfStudentsLeft);
-            int teamIndex = 0;
-            for(int i = 1; i <= studentsNumberInTeam; i++) {
-                Team team = oldTeams.get(teamIndex);
-                
+            for (int i = 1; i <= STUDENTS_NUMBER_IN_TEAM; i++) {
+                teamIndex = (teamIndex < TEAMS_COUNT) ? teamIndex : 0;
+                boolean successfullyAdded = false;
+                while (!successfullyAdded && teamIndex<=TEAMS_COUNT) {
+                    if (oldTeams.get(teamIndex).getMembers().size() != 0) {
+                        newTeam.addMember(oldTeams.get(teamIndex).getMembers().remove(0));
+                        successfullyAdded = true;
+                    }
+                    teamIndex++;
+                }
             }
-            numberOfStudentsLeft -= studentsNumberInTeam;
+            newTeams.add(newTeam);
+            numberOfStudentsLeft -= STUDENTS_NUMBER_IN_TEAM;
         }
     }
-
-
-
-//    pętlaWPętli (powtarzana razy numOfStudInTeam):
-//    biorę team 0
-//    sprawdzam czy ma elementy
-//    jeśli tak to losuję randomowego Stringa i go stamtąd wycinam, i wrzucam do newTeam
-//    jeśli nie to idę do kolejnego teamu
-//    przechodzę do teamu 1 etc.
-//odejmowanie od numberOfStudentsLeft
-//    po zakończeniu pętli w pętli, wrzucam team do listyteamów i sprawdzam czy jacyś studenci zostali
-
 
     public void loadOldTeams(String fileName) {
         oldTeams.clear();
@@ -67,6 +59,18 @@ public class Reshuffle {
         }
     }
 
+    public List<Team> getOldTeams() {
+        return oldTeams;
+    }
+
+    public void setOldTeams(List<Team> list) {
+        oldTeams = list;
+    }
+
+    public List<Team> getNewTeams() {
+        return newTeams;
+    }
+
     public void printOldTeams() {
         System.out.println("Old: " + oldTeams);
     }
@@ -79,8 +83,7 @@ public class Reshuffle {
         Reshuffle reshuffle = new Reshuffle();
         reshuffle.loadOldTeams("src/main/resources/team_reshuffle/teams_sample.txt");
         reshuffle.printOldTeams();
-        reshuffle.generateNewTeams(4);
+        reshuffle.generateNewTeams();
         reshuffle.printNewTeams();
     }
-
 }
