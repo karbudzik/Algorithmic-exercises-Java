@@ -21,39 +21,44 @@ public class Minesweeper {
         }
     }
 
-
     public String[][] addMinesRandomly(String[][] board, int numberOfMines) {
-        try {
-            int numberOfAllElements = board.length * board[0].length;
-            if (numberOfMines >= numberOfAllElements) {
-                throw new IllegalArgumentException("Number of mines need to be smaller than number of places on board!");
-            }
-            Random rand = new Random();
-            int numberOfMinesLeft = numberOfMines;
-            while (numberOfMinesLeft > 0) {
-                int rowIndex = rand.nextInt(board.length);
-                int columnIndex = rand.nextInt(board[0].length);
-                if (board[rowIndex][columnIndex].equals(".")) {
-                    board[rowIndex][columnIndex] = "*";
-                    numberOfMinesLeft--;
-                }
-            }
-        } catch (NullPointerException e) {
-            throw new IllegalArgumentException("Array dimensions need to be bigger than 0!");
+        int numberOfAllElements = board.length * board[0].length;
+        if (numberOfMines >= numberOfAllElements) {
+            throw new IllegalArgumentException("Number of mines need to be smaller than number of places on board!");
         }
-
+        Random rand = new Random();
+        int numberOfMinesLeft = numberOfMines;
+        while (numberOfMinesLeft > 0) {
+            int rowIndex = rand.nextInt(board.length);
+            int columnIndex = rand.nextInt(board[0].length);
+            if (board[rowIndex][columnIndex].equals(".")) {
+                board[rowIndex][columnIndex] = "*";
+                numberOfMinesLeft--;
+            }
+        }
         return board;
     }
 
     public String[][] addPointsToEmptyFields(String[][] board) {
+        int[][] coordinatesToCheck = {{-1, -1}, {-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}};
 
-        for (String[] row : board) {
-            for (int i = 0; i < board[0].length; i++) {
+        for (int row = 0; row < board.length; row++) {
+            for (int col = 0; col < board[0].length; col++) {
                 int points = 0;
-                int[][] coordinatesToCheck =  {{-1, -1}, {-1, 0}, {}, {}, {}, {}, {}, {}};
-
-                // jeśli * to nie ruszamy
-                row[i] = ".";
+                if (!board[row][col].equals("*")) {
+                    for (int[] coordinate : coordinatesToCheck) {
+                        try {
+                            int row_dislocation = coordinate[0];
+                            int col_dislocation = coordinate[1];
+                            if (board[row - row_dislocation][col - col_dislocation].equals("*")) {
+                                points++;
+                            }
+                        } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+                            // catch block left empty on purpose
+                        }
+                    }
+                    board[row][col] = Integer.toString(points);
+                }
             }
         }
         return board;
@@ -71,8 +76,8 @@ public class Minesweeper {
 
     public static void main(String[] args) {
         Minesweeper minesweeper = new Minesweeper();
-        String[][] board = minesweeper.generateEmptyArray(4, 5);
-        String[][] boardWithMines = minesweeper.addMinesRandomly(board, 8);
+        String[][] board = minesweeper.generateEmptyArray(4, 3);
+        String[][] boardWithMines = minesweeper.addMinesRandomly(board, 4);
         String[][] boardWithMinesAndPoints = minesweeper.addPointsToEmptyFields(boardWithMines);
         minesweeper.printBoard(boardWithMinesAndPoints);
     }

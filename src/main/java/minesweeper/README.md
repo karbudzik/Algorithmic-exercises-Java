@@ -29,3 +29,7 @@ Example solution:
 ###Step 3
 Write another method, which print out the result table.
 
+## Execution
+The code has four main methods for: generating empty board of given size, add mines randomly (specified amount), calculating points for remaining fields and printing result.
+
+The methods have been created in procedural way for simplification. Basic exceptions have been handled and main logic tested.
