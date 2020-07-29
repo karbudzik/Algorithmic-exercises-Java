@@ -76,8 +76,8 @@ public class Minesweeper {
 
     public static void main(String[] args) {
         Minesweeper minesweeper = new Minesweeper();
-        String[][] board = minesweeper.generateEmptyArray(4, 3);
-        String[][] boardWithMines = minesweeper.addMinesRandomly(board, 4);
+        String[][] board = minesweeper.generateEmptyArray(4, 6);
+        String[][] boardWithMines = minesweeper.addMinesRandomly(board, 6);
         String[][] boardWithMinesAndPoints = minesweeper.addPointsToEmptyFields(boardWithMines);
         minesweeper.printBoard(boardWithMinesAndPoints);
     }
