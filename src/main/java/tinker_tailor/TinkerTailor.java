@@ -31,7 +31,7 @@ public class TinkerTailor {
         return excludedPlayers;
     }
 
-    private List<Integer> generatePlayersList(int numberOfParticipants) {
+    protected List<Integer> generatePlayersList(int numberOfParticipants) {
         List<Integer> participants = new ArrayList<>();
 
         for (int i = 0; i < numberOfParticipants; i++) {
