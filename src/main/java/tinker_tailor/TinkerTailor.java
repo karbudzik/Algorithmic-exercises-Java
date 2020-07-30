@@ -15,18 +15,13 @@ public class TinkerTailor {
         int index = 0;
 
         while (players.size() > 1) {
-            if ((index + sequenceLength) <= players.size()) {
-                index = index + sequenceLength - 1;
-            } else {
-                int size = players.size();
-                if (index < size) {
-                    int rest = size - index;
-                    index = sequenceLength - rest - 1;
+            for (int i = 1; i < sequenceLength; i++) {
+                if (index + 1 < players.size()) {
+                    index++;
+                } else if (index + 1 == players.size()){
+                    index = 0;
                 } else {
-                    while (index >= size) {
-                        int rest = size - index;
-                        index = sequenceLength - rest - 1;
-                    }
+                    index = 1;
                 }
             }
             excludedPlayers.add(players.remove(index));
@@ -54,8 +49,8 @@ public class TinkerTailor {
     public static void main(String[] args) {
         TinkerTailor tinkerTailor = new TinkerTailor();
         System.out.println("\n" + "Numbers before playing:");
-        tinkerTailor.printList(tinkerTailor.generatePlayersList(6));
+        tinkerTailor.printList(tinkerTailor.generatePlayersList(20));
         System.out.println("Numbers excluded from the list (in the exclusion order):");
-        tinkerTailor.printList(tinkerTailor.play(6, 3));
+        tinkerTailor.printList(tinkerTailor.play(20, 2));
     }
 }
