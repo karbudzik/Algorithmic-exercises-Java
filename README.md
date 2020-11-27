@@ -12,3 +12,7 @@ Set of smaller assignments aiming at improving algorithmic skills. Each exercise
 * **Tinker Tailor** - imitation of the children's game of excluding member from a group each time the rhyming poem ends.
 
 ![tinker_tailor_screenshot](src/main/resources/img/tinker.png)
+
+* **Optimus Prime** - sieve of Eratosthenes; simple, an ancient algorithm for finding all prime numbers up to any given limit
+
+* **Merge sort**
