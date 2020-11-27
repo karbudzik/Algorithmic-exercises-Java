@@ -15,4 +15,4 @@ Set of smaller assignments aiming at improving algorithmic skills. Each exercise
 
 * **Optimus Prime** - sieve of Eratosthenes; simple, an ancient algorithm for finding all prime numbers up to any given limit
 
-* **Merge sort**
+* **Merge sort** - an efficient, general-purpose, comparison-based sorting algorithm. Merge sort is a divide and conquer algorithm that was invented by John von Neumann in 1945. 
