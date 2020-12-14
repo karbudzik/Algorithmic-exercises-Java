@@ -25,6 +25,7 @@ public class QuickSort {
             sort(integerList, left, index - 1);
             sort(integerList, index, right);
         }
+
     }
 
     private int partition(List<Integer> integerList, int left, int right, int pivot) {
@@ -35,6 +36,8 @@ public class QuickSort {
             while (integerList.get(right) > pivot) {
                 right--;
             }
+            int i = 5;
+
             if (left <= right) {
                 Collections.swap(integerList, left, right);
                 left++;
