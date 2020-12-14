@@ -8,15 +8,32 @@ class DynamicIntArrayTest {
 
     @Test
     void should_initialize_array_with_given_size() {
-        new DynamicIntArray(15);
+        // given:
+        DynamicIntArray array = createArray(11);
+
+        // when:
+        String result = " 0 1 2 3 4 5 6 7 8 9 10";
+
+        // then:
+        assertEquals(result, array.toString());
+    }
+
+    @Test
+    void should_throw_IllegalArgumentException_when_given_illegal_size() {
+        assertThrows(IllegalArgumentException.class, () -> new DynamicIntArray(-5));
     }
 
     @Test
     void should_add_new_element_to_array() {
+        // given:
         DynamicIntArray array = createArray(11);
+
+        // when:
         array.add(32);
         array.add(42);
         String result = " 0 1 2 3 4 5 6 7 8 9 10 32 42";
+
+        // then:
         assertEquals(result, array.toString());
     }
 
