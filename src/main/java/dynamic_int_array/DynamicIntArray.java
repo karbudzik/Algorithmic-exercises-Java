@@ -28,10 +28,33 @@ public class DynamicIntArray {
         size++;
     }
 
-    public void remove(int elem) {
+    public void remove(int index) {
+        int[] newArray = new int[size - 1];
+        for (int i = 0, j = 0; i < size; i++) {
+            if (i != index) {
+                newArray[j++] = this.elements[i];
+            }
+        }
+        this.elements = newArray;
+        size--;
     }
 
     public void insert(int index, int elem) {
+        int[] newArray = new int[size + 1];
+        if (index >= size) {
+            add(elem);
+        }
+        int j = 0;
+        for (int i = 0; i <= size; i++) {
+            if (i == index) {
+                newArray[i] = elem;
+            } else {
+                newArray[i] = this.elements[j];
+                j++;
+            }
+        }
+        this.elements = newArray;
+        size++;
     }
 
     @Override
